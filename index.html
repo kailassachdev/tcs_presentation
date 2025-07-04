@@ -20,20 +20,6 @@
             background-color: #0b071a;
             color: #e0e0e0;
             overflow-x: hidden;
-            /* For cursor trail */
-            cursor: none;
-        }
-        
-        /* Custom cursor */
-        #cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #c4b5fd;
-            border-radius: 50%;
-            position: fixed;
-            z-index: 1000;
-            pointer-events: none;
-            transition: transform 0.2s ease-out;
         }
 
         /* The magic: Interactive Aurora Background */
@@ -43,36 +29,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -3; /* Behind orbs */
+            z-index: -2;
             background: radial-gradient(40% 40% at 20% 80%, rgba(121, 40, 202, 0.3), transparent),
                         radial-gradient(30% 30% at 80% 20%, rgba(67, 56, 202, 0.3), transparent),
                         radial-gradient(50% 50% at 50% 50%, rgba(29, 78, 216, 0.2), transparent);
             animation: aurora-pan 25s infinite linear alternate;
-        }
-
-        /* Floating Background Orbs */
-        #background-orbs {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.6;
-        }
-        .orb:nth-child(1) { width: 300px; height: 300px; background: rgba(67, 56, 202, 0.4); top: 10%; left: 5%; animation: float 15s infinite alternate; }
-        .orb:nth-child(2) { width: 250px; height: 250px; background: rgba(121, 40, 202, 0.4); top: 60%; left: 80%; animation: float 20s infinite alternate-reverse; }
-        .orb:nth-child(3) { width: 200px; height: 200px; background: rgba(29, 78, 216, 0.4); top: 40%; left: 40%; animation: float 18s infinite alternate; }
-
-        @keyframes float {
-            from { transform: translateY(-20px) translateX(10px) scale(1); }
-            to { transform: translateY(20px) translateX(-10px) scale(1.1); }
         }
 
         @keyframes aurora-pan {
@@ -115,7 +76,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s;
             max-width: 56rem; /* max-w-5xl */
-            transform-style: preserve-3d; /* Required for 3D transforms */
+            transform-style: preserve-3d;
         }
         
         .content-card:hover {
@@ -134,46 +95,6 @@
             transform: translateY(0);
         }
 
-        /* Text Animation */
-        .animated-headline {}
-        .animated-headline span {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(20px) rotate(5deg);
-            animation: reveal-char 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            animation-delay: var(--char-delay);
-        }
-        .content-section:not(.is-visible) .animated-headline span {
-            opacity: 0;
-            animation: none;
-        }
-
-        @keyframes reveal-char {
-            to {
-                opacity: 1;
-                transform: translateY(0) rotate(0);
-            }
-        }
-        
-        /* Button Shimmer Effect */
-        .shimmer-button {
-            position: relative;
-            overflow: hidden;
-        }
-        .shimmer-button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .shimmer-button:hover::after {
-            left: 150%;
-        }
-
         /* Floating Side Navigation */
         #side-nav {
             position: fixed;
@@ -185,6 +106,7 @@
             flex-direction: column;
             gap: 1rem;
         }
+
         #side-nav a {
             width: 12px;
             height: 12px;
@@ -193,8 +115,9 @@
             transition: all 0.3s ease;
             position: relative;
         }
+
         #side-nav a:hover, #side-nav a.active {
-            background-color: #c4b5fd;
+            background-color: #c4b5fd; /* violet-300 */
             transform: scale(1.5);
         }
         #side-nav a .tooltip {
@@ -221,216 +144,254 @@
     </style>
 </head>
 <body>
-    <div id="cursor-dot"></div>
+
     <div id="aurora-background"></div>
-    <div id="background-orbs">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
-    </div>
     <div id="spotlight"></div>
 
     <nav id="side-nav">
-        <a href="#title" class="active" data-section="title"><span class="tooltip">Title</span></a>
-        <a href="#hybrid-model" data-section="hybrid-model"><span class="tooltip">Hybrid Model</span></a>
-        <a href="#ml-approaches" data-section="ml-approaches"><span class="tooltip">ML Approaches</span></a>
-        <a href="#sentiment-analysis" data-section="sentiment-analysis"><span class="tooltip">Sentiment Analysis</span></a>
-        <a href="#gemini-api" data-section="gemini-api"><span class="tooltip">Gemini API</span></a>
-        <a href="#summary" data-section="summary"><span class="tooltip">Summary</span></a>
+        <a href="#title" class="active" data-section="title">
+            <span class="tooltip">Title</span>
+        </a>
+        <a href="#hybrid-model" data-section="hybrid-model">
+            <span class="tooltip">Hybrid Model</span>
+        </a>
+        <a href="#ml-approaches" data-section="ml-approaches">
+            <span class="tooltip">ML Approaches</span>
+        </a>
+        <a href="#sentiment-analysis" data-section="sentiment-analysis">
+            <span class="tooltip">Sentiment Analysis</span>
+        </a>
+        <a href="#gemini-api" data-section="gemini-api">
+            <span class="tooltip">Gemini API</span>
+        </a>
+        <a href="#summary" data-section="summary">
+            <span class="tooltip">Summary</span>
+        </a>
     </nav>
     
     <main>
-        <!-- Content sections remain the same as the previous correct version -->
+        <!-- Page 1: Title Section -->
         <section id="title" class="content-section">
             <div class="content-card text-center">
-                <h1 class="animated-headline text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 mb-4">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 mb-4 animatable">
                     AI Attrition Prediction System
                 </h1>
                 <p class="text-xl md:text-2xl text-indigo-200 font-medium max-w-3xl mx-auto animatable" style="--delay: 0.1s;">
                     An Interactive Journey into a Multi-Modal AI for Predicting Employee Turnover
                 </p>
                 <p class="mt-8 text-indigo-300 animatable" style="--delay: 0.2s;">Scroll down to begin exploring.</p>
-                <div class="text-5xl mt-6 text-purple-400 animate-bounce animatable" style="--delay: 0.3s;">↓</div>
+                <div class="text-5xl mt-6 text-purple-400 animate-bounce animatable" style="--delay: 0.3s;">
+                    ↓
+                </div>
             </div>
         </section>
 
+        <!-- Page 2: The Integrated Model -->
         <section id="hybrid-model" class="content-section">
             <div class="content-card">
-                <h2 class="animated-headline text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-6 flex items-center">
+                <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-6 flex items-center animatable">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 mr-4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
                     The Integrated Hybrid Model
                 </h2>
-                <p class="text-lg text-gray-300 leading-relaxed animatable" style="--delay: 0.1s;">Our core innovation is a hybrid model that fuses the predictive power of two distinct AI approaches. This creates a comprehensive understanding of attrition risk that is impossible to achieve with a single method.</p>
+                <p class="text-lg text-gray-300 leading-relaxed animatable" style="--delay: 0.1s;">
+                    Our core innovation is a hybrid model that fuses the predictive power of two distinct AI approaches. This creates a comprehensive understanding of attrition risk that is impossible to achieve with a single method.
+                </p>
                 <div class="mt-6 grid md:grid-cols-2 gap-6">
-                     <div class="p-4 bg-gray-900/50 rounded-lg border border-white/10 animatable" style="--delay: 0.2s;"><h4 class="font-semibold text-xl text-blue-300 mb-2">LSTM for Sentiment</h4><p class="text-gray-300">Analyzes the unstructured text from employee reviews to capture underlying emotions and intent.</p></div>
-                     <div class="p-4 bg-gray-900/50 rounded-lg border border-white/10 animatable" style="--delay: 0.3s;"><h4 class="font-semibold text-xl text-blue-300 mb-2">Random Forest for Data</h4><p class="text-gray-300">Processes structured HR data (salary, tenure, etc.) to find concrete, quantifiable risk factors.</p></div>
+                     <div class="p-4 bg-gray-900/50 rounded-lg border border-white/10 animatable" style="--delay: 0.2s;">
+                        <h4 class="font-semibold text-xl text-blue-300 mb-2">LSTM for Sentiment</h4>
+                        <p class="text-gray-300">Analyzes the unstructured text from employee reviews to capture underlying emotions and intent.</p>
+                    </div>
+                     <div class="p-4 bg-gray-900/50 rounded-lg border border-white/10 animatable" style="--delay: 0.3s;">
+                        <h4 class="font-semibold text-xl text-blue-300 mb-2">Random Forest for Data</h4>
+                        <p class="text-gray-300">Processes structured HR data (salary, tenure, etc.) to find concrete, quantifiable risk factors.</p>
+                    </div>
                 </div>
                  <div class="mt-8 text-center animatable" style="--delay: 0.4s;">
-                    <a href="https://colab.research.google.com/drive/1Oxx2_JMHwV_1ivnUVdDVKarRb81eiHBC?usp=sharing" target="_blank" class="shimmer-button inline-block px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-500 transition-all transform hover:scale-105">Explore the Hybrid Model in Colab</a>
+                    <a href="https://colab.research.google.com/drive/1Oxx2_JMHwV_1ivnUVdDVKarRb81eiHBC?usp=sharing" target="_blank" class="inline-block px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-500 transition-all transform hover:scale-105">
+                        Explore the Hybrid Model in Colab
+                    </a>
                 </div>
             </div>
         </section>
 
+        <!-- Page 3: Our Approaches -->
         <section id="ml-approaches" class="content-section">
             <div class="content-card">
-                 <h2 class="animated-headline text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-400 mb-6 flex items-center">
+                 <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-400 mb-6 flex items-center animatable">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 mr-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg>
                     Our Machine Learning Approaches
                 </h2>
                 <p class="text-lg text-gray-300 mb-8 animatable" style="--delay: 0.1s;">We benchmarked several models to find the most effective predictors for structured HR data. Each offers a unique way of identifying patterns.</p>
                 <div class="grid md:grid-cols-3 gap-6 text-center">
-                    <div class="p-6 bg-gray-900/40 rounded-xl border border-white/10 flex flex-col justify-between animatable" style="--delay: 0.2s;"><div><h3 class="text-xl font-bold text-emerald-300 mb-2">Random Forest</h3><p class="text-sm text-gray-300 mb-4">An ensemble of decision trees that provides high accuracy and built-in feature importance.</p></div><a href="https://colab.research.google.com/drive/1tSdLhyq9xEbqroSTeQc97brxoHzbm-zN" target="_blank" class="shimmer-button mt-4 inline-block py-2 px-4 bg-emerald-600/50 text-emerald-200 text-sm font-semibold rounded-md hover:bg-emerald-600/80 transition">View in Colab</a></div>
-                    <div class="p-6 bg-gray-900/40 rounded-xl border border-white/10 flex flex-col justify-between animatable" style="--delay: 0.3s;"><div><h3 class="text-xl font-bold text-emerald-300 mb-2">Logistic Regression</h3><p class="text-sm text-gray-300 mb-4">A fast, interpretable linear model that calculates the probability of attrition.</p></div><a href="https://colab.research.google.com/drive/1oVx2_C_adpHmVIXYUMJXuRseJ0l5tLoJ" target="_blank" class="shimmer-button mt-4 inline-block py-2 px-4 bg-emerald-600/50 text-emerald-200 text-sm font-semibold rounded-md hover:bg-emerald-600/80 transition">View in Colab</a></div>
-                    <div class="p-6 bg-gray-900/40 rounded-xl border border-white/10 flex flex-col justify-between animatable" style="--delay: 0.4s;"><div><h3 class="text-xl font-bold text-emerald-300 mb-2">K-Nearest Neighbors</h3><p class="text-sm text-gray-300 mb-4">A non-parametric method that classifies an employee based on the 'votes' of their closest peers in the dataset.</p></div><a href="https://colab.research.google.com/drive/1oVx2_C_adpHmVIXYUMJXuRseJ0l5tLoJ" target="_blank" class="shimmer-button mt-4 inline-block py-2 px-4 bg-emerald-600/50 text-emerald-200 text-sm font-semibold rounded-md hover:bg-emerald-600/80 transition">View in Colab</a></div>
+                    <div class="p-6 bg-gray-900/40 rounded-xl border border-white/10 flex flex-col justify-between animatable" style="--delay: 0.2s;">
+                        <div>
+                            <h3 class="text-xl font-bold text-emerald-300 mb-2">Random Forest</h3>
+                            <p class="text-sm text-gray-300 mb-4">An ensemble of decision trees that provides high accuracy and built-in feature importance.</p>
+                        </div>
+                        <a href="https://colab.research.google.com/drive/1tSdLhyq9xEbqroSTeQc97brxoHzbm-zN" target="_blank" class="mt-4 inline-block py-2 px-4 bg-emerald-600/50 text-emerald-200 text-sm font-semibold rounded-md hover:bg-emerald-600/80 transition">View in Colab</a>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 rounded-xl border border-white/10 flex flex-col justify-between animatable" style="--delay: 0.3s;">
+                        <div>
+                            <h3 class="text-xl font-bold text-emerald-300 mb-2">Logistic Regression</h3>
+                            <p class="text-sm text-gray-300 mb-4">A fast, interpretable linear model that calculates the probability of attrition.</p>
+                        </div>
+                        <a href="https://colab.research.google.com/drive/1oVx2_C_adpHmVIXYUMJXuRseJ0l5tLoJ" target="_blank" class="mt-4 inline-block py-2 px-4 bg-emerald-600/50 text-emerald-200 text-sm font-semibold rounded-md hover:bg-emerald-600/80 transition">View in Colab</a>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 rounded-xl border border-white/10 flex flex-col justify-between animatable" style="--delay: 0.4s;">
+                        <div>
+                            <h3 class="text-xl font-bold text-emerald-300 mb-2">K-Nearest Neighbors</h3>
+                            <p class="text-sm text-gray-300 mb-4">A non-parametric method that classifies an employee based on the 'votes' of their closest peers in the dataset.</p>
+                        </div>
+                        <a href="https://colab.research.google.com/drive/1oVx2_C_adpHmVIXYUMJXuRseJ0l5tLoJ" target="_blank" class="mt-4 inline-block py-2 px-4 bg-emerald-600/50 text-emerald-200 text-sm font-semibold rounded-md hover:bg-emerald-600/80 transition">View in Colab</a>
+                    </div>
                 </div>
             </div>
         </section>
         
+        <!-- Page 4: Sentiment Analysis -->
         <section id="sentiment-analysis" class="content-section">
             <div class="content-card">
-                 <h2 class="animated-headline text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 mb-6 flex items-center">
+                 <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 mb-6 flex items-center animatable">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 mr-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0m3.75 0a12.064 12.064 0 01-4.5 0m3.75 0l-3.75 0M12 3v2.25m6.364.364l-1.591 1.591M21 12h-2.25m-.364 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>
                     Deep Dive: Sentiment Analysis
                 </h2>
-                <div class="animatable" style="--delay: 0.1s;"><p class="text-lg text-gray-300 leading-relaxed">To understand the "why" behind employee feelings, we built a Deep Learning model to classify text. It reads employee reviews and determines if the sentiment points towards staying or leaving.</p></div>
+                <div class="animatable" style="--delay: 0.1s;">
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        To understand the "why" behind employee feelings, we built a Deep Learning model to classify text. It reads employee reviews and determines if the sentiment points towards staying or leaving.
+                    </p>
+                </div>
                 <ol class="list-decimal list-inside space-y-3 font-mono text-gray-300 mt-6">
                     <li class="animatable" style="--delay: 0.2s;"><span class="font-sans text-amber-300 font-semibold">Clean & Tokenize:</span> Raw text is cleaned, and words are converted to numerical tokens.</li>
                     <li class="animatable" style="--delay: 0.3s;"><span class="font-sans text-amber-300 font-semibold">Sequence Padding:</span> All text inputs are standardized to a fixed length for the model.</li>
                     <li class="animatable" style="--delay: 0.4s;"><span class="font-sans text-amber-300 font-semibold">LSTM Prediction:</span> The LSTM network analyzes the sequence to predict the final sentiment.</li>
                 </ol>
                 <div class="mt-8 text-center animatable" style="--delay: 0.5s;">
-                    <a href="https://colab.research.google.com/drive/1dhj9_BBsVyL1z9gbl207C7LKDRf0az-x" target="_blank" class="shimmer-button inline-block px-8 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-500 transition-all transform hover:scale-105">See the Sentiment Model in Colab</a>
+                    <a href="https://colab.research.google.com/drive/1dhj9_BBsVyL1z9gbl207C7LKDRf0az-x" target="_blank" class="inline-block px-8 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-500 transition-all transform hover:scale-105">
+                        See the Sentiment Model in Colab
+                    </a>
                 </div>
             </div>
         </section>
 
+        <!-- Page 5: Gemini API (NEW SECTION) -->
         <section id="gemini-api" class="content-section">
             <div class="content-card">
-                 <h2 class="animated-headline text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-500 mb-6 flex items-center">
+                 <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-500 mb-6 flex items-center animatable">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 mr-4"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.572L16.5 21.75l-.398-1.178a3.375 3.375 0 00-2.455-2.456L12.75 18l1.178-.398a3.375 3.375 0 002.455-2.456L16.5 14.25l.398 1.178a3.375 3.375 0 002.456 2.456L20.25 18l-1.178.398a3.375 3.375 0 00-2.456 2.456z" /></svg>
                     Next-Gen Insights with Gemini API
                 </h2>
-                <div class="animatable" style="--delay: 0.1s;"><p class="text-lg text-gray-300 leading-relaxed">We are pushing the boundaries of HR analytics by integrating Google's Gemini API. This moves beyond prediction to provide generative, actionable intelligence.</p></div>
+                <div class="animatable" style="--delay: 0.1s;">
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        We are pushing the boundaries of HR analytics by integrating Google's Gemini API. This moves beyond prediction to provide generative, actionable intelligence.
+                    </p>
+                </div>
                 <div class="mt-6 space-y-4">
-                    <div class="animatable" style="--delay: 0.2s;"><h4 class="text-xl font-semibold text-rose-300">Automated Risk Summaries</h4><p class="text-gray-400">Gemini can analyze an at-risk employee's data and generate a concise, human-readable summary of the key factors contributing to their flight risk.</p></div>
-                     <div class="animatable" style="--delay: 0.3s;"><h4 class="text-xl font-semibold text-rose-300">Personalized Intervention Strategies</h4><p class="text-gray-400">Based on the risk factors, the API suggests targeted intervention plans for HR managers, such as specific conversation starters or policy adjustments.</p></div>
+                    <div class="animatable" style="--delay: 0.2s;">
+                        <h4 class="text-xl font-semibold text-rose-300">Automated Risk Summaries</h4>
+                        <p class="text-gray-400">Gemini can analyze an at-risk employee's data and generate a concise, human-readable summary of the key factors contributing to their flight risk.</p>
+                    </div>
+                     <div class="animatable" style="--delay: 0.3s;">
+                        <h4 class="text-xl font-semibold text-rose-300">Personalized Intervention Strategies</h4>
+                        <p class="text-gray-400">Based on the risk factors, the API suggests targeted intervention plans for HR managers, such as specific conversation starters or policy adjustments.</p>
+                    </div>
                 </div>
                 <div class="mt-8 text-center animatable" style="--delay: 0.4s;">
-                    <a href="https://9000-firebase-studio-1748115577540.cluster-htdgsbmflbdmov5xrjithceibm.cloudworkstations.dev" target="_blank" class="shimmer-button inline-block px-8 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition-all transform hover:scale-105">Interact with the Gemini Demo</a>
+                    <a href="https://9000-firebase-studio-1748115577540.cluster-htdgsbmflbdmov5xrjithceibm.cloudworkstations.dev" target="_blank" class="inline-block px-8 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition-all transform hover:scale-105">
+                        Interact with the Gemini Demo
+                    </a>
                 </div>
             </div>
         </section>
 
+        <!-- Summary Section -->
         <section id="summary" class="content-section">
             <div class="content-card text-center">
-                <h2 class="animated-headline text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 mb-6">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 mb-6 animatable">
                     The Power of Synthesis
                 </h2>
-                <p class="text-xl text-indigo-200 max-w-3xl mx-auto mb-8 animatable" style="--delay: 0.1s;">Our system creates a powerful synergy between different forms of AI, delivering insights far greater than the sum of their parts.</p>
+                <p class="text-xl text-indigo-200 max-w-3xl mx-auto mb-8 animatable" style="--delay: 0.1s;">
+                    Our system creates a powerful synergy between different forms of AI, delivering insights far greater than the sum of their parts.
+                </p>
                 <div class="grid md:grid-cols-2 gap-8 text-left">
-                    <div class="p-6 bg-blue-900/30 rounded-lg border border-blue-500/50 animatable" style="--delay: 0.2s;"><h3 class="text-2xl font-bold text-blue-300 mb-2">Predictive AI</h3><p><strong>LSTM and ML models</strong> listen to the employee's voice and analyze the facts, predicting who is at risk and why.</p></div>
-                     <div class="p-6 bg-red-900/30 rounded-lg border border-red-500/50 animatable" style="--delay: 0.3s;"><h3 class="text-2xl font-bold text-red-300 mb-2">Generative AI</h3><p><strong>Gemini</strong> takes these predictions and generates creative, actionable strategies for retention, closing the loop from insight to action.</p></div>
+                    <div class="p-6 bg-blue-900/30 rounded-lg border border-blue-500/50 animatable" style="--delay: 0.2s;">
+                        <h3 class="text-2xl font-bold text-blue-300 mb-2">Predictive AI</h3>
+                        <p><strong>LSTM and ML models</strong> listen to the employee's voice and analyze the facts, predicting who is at risk and why.</p>
+                    </div>
+                     <div class="p-6 bg-red-900/30 rounded-lg border border-red-500/50 animatable" style="--delay: 0.3s;">
+                        <h3 class="text-2xl font-bold text-red-300 mb-2">Generative AI</h3>
+                        <p><strong>Gemini</strong> takes these predictions and generates creative, actionable strategies for retention, closing the loop from insight to action.</p>
+                    </div>
                 </div>
-                <p class="mt-10 text-2xl font-semibold text-white animatable" style="--delay: 0.4s;">The result? Proactive, data-driven, and human-centric retention strategies.</p>
+                <p class="mt-10 text-2xl font-semibold text-white animatable" style="--delay: 0.4s;">
+                   The result? Proactive, data-driven, and human-centric retention strategies.
+                </p>
             </div>
         </section>
+
     </main>
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Custom Cursor & Trail ---
-            const cursorDot = document.getElementById('cursor-dot');
-            const colors = ["#c4b5fd", "#a5b4fc", "#818cf8", "#f472b6", "#fb7185"];
-
-            window.addEventListener('mousemove', e => {
-                cursorDot.style.left = `${e.clientX}px`;
-                cursorDot.style.top = `${e.clientY}px`;
-
-                const particle = document.createElement('div');
-                particle.style.position = 'fixed';
-                particle.style.left = `${e.clientX}px`;
-                particle.style.top = `${e.clientY}px`;
-                particle.style.width = `${Math.random() * 8 + 2}px`;
-                particle.style.height = particle.style.width;
-                particle.style.borderRadius = '50%';
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.pointerEvents = 'none';
-                particle.style.zIndex = '999';
-                document.body.appendChild(particle);
-
-                particle.animate([
-                    { transform: `translate(0, 0) scale(1)`, opacity: 1 },
-                    { transform: `translate(${(Math.random() - 0.5) * 60}px, ${(Math.random() - 0.5) * 60}px) scale(0)`, opacity: 0 }
-                ], {
-                    duration: 600,
-                    easing: 'ease-out'
-                }).onfinish = () => {
-                    particle.remove();
-                };
+            // --- Interactive Mouse Spotlight Effect ---
+            const spotlight = document.getElementById('spotlight');
+            document.addEventListener('mousemove', (e) => {
+                spotlight.style.left = e.pageX + 'px';
+                spotlight.style.top = e.pageY + 'px';
             });
-            
-            // --- Text Animation ---
-            function setupHeadlineAnimations(selector, isVisible) {
-                document.querySelectorAll(selector).forEach(headline => {
-                    if (headline.dataset.animated && !isVisible) return; 
-                    if (!headline.dataset.animated && isVisible) { 
-                        const text = headline.textContent.trim();
-                        headline.innerHTML = '';
-                        text.split('').forEach((char, index) => {
-                            const span = document.createElement('span');
-                            span.textContent = char === ' ' ? '\u00A0' : char;
-                            span.style.setProperty('--char-delay', `${index * 0.03}s`);
-                            headline.appendChild(span);
-                        });
-                        headline.dataset.animated = 'true';
-                    }
-                });
-            }
 
             // --- Animate on Scroll with Intersection Observer ---
             const sections = document.querySelectorAll('.content-section');
             const navLinks = document.querySelectorAll('#side-nav a');
             
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4 // 40% of the section must be visible
+            };
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    const sectionId = entry.target.id;
-                    const headlineSelector = `#${sectionId} .animated-headline`;
-                    
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        setupHeadlineAnimations(headlineSelector, true);
-                        navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`));
+                        
+                        // Update active nav link
+                        const sectionId = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
+                        });
+
                     } else {
-                        entry.target.classList.remove('is-visible');
-                        const headline = entry.target.querySelector('.animated-headline');
-                        if(headline) headline.dataset.animated = 'false';
+                         // Optional: remove class if you want animation to re-trigger on scroll up
+                         // entry.target.classList.remove('is-visible');
                     }
                 });
             }, observerOptions);
-            sections.forEach(section => observer.observe(section));
 
-            // --- 3D Card Tilt Effect (RESTORED) ---
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- 3D Card Tilt Effect (Desktop only) ---
             const cards = document.querySelectorAll('.content-card');
+
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
                     if (window.innerWidth < 768) return; // Disable on mobile
+
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
-                    const rotateX = -y / 30; // Control intensity
-                    const rotateY = x / 20;
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+
+                    const rotateX = -y / 40; // Control tilt intensity
+                    const rotateY = x / 30;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
                 });
 
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
                 });
             });
-
-            // --- Scroll Rotation Effect (REMOVED) ---
-            // The code that was here is now gone.
-
         });
     </script>
 </body>
